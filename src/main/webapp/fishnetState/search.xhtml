@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:forgeview="http://jboss.org/forge/view"
+	template="/resources/scaffold/pageTemplate.xhtml">
+
+	<f:metadata>
+		<f:viewParam name="page" value='#{fishnetStateBean.page}'/>
+		<f:event type="preRenderView" listener='#{fishnetStateBean.paginate}'/>
+	</f:metadata>
+
+	<ui:param name="pageTitle" value="Fischnetz Status Suche"/>
+
+	<ui:define name="header">
+		Fischnetz Status
+	</ui:define>
+
+	<ui:define name="subheader">
+		Status Suche
+	</ui:define>
+
+	<ui:define name="footer"/>
+
+	<ui:define name="main">
+		<h:form id="search">
+			<f:validateBean disabled="true">
+				<h:panelGroup styleClass="search">
+
+					<h:panelGrid columnClasses="label,component,required" columns="3">
+						<h:outputLabel for="fishnetStateBeanExampleDescription" value="Beschreibung:"/>
+						<h:panelGroup>
+							<h:inputText id="fishnetStateBeanExampleDescription" maxLength="50" value="#{fishnetStateBean.example.description}"/>
+							<h:message for="fishnetStateBeanExampleDescription" styleClass="error"/>
+						</h:panelGroup>
+						<h:outputText/>
+					</h:panelGrid>
+					<h:panelGroup styleClass="buttons">
+						<h:commandLink value="Suchen" action='#{fishnetStateBean.search}' styleClass="btn btn-primary"/>
+						<h:commandLink value="Neu" action='#{fishnetStateBean.create}' styleClass="btn btn-primary"/>
+					</h:panelGroup>
+				</h:panelGroup>
+			</f:validateBean>
+			
+			<h:dataTable id="fishnetStateBeanPageItems" styleClass="data-table" value="#{forgeview:asSortedList(fishnetStateBean.pageItems)}" var="_item">
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Beschreibung"/>
+					</f:facet>
+					<h:link outcome="/fishnetState/view">
+						<f:param name="id" value="#{_item.id}"/>
+						<h:outputText id="_itemDescription" value="#{_item.description}"/>
+					</h:link>
+				</h:column>
+			</h:dataTable>
+			<ui:include src="/resources/scaffold/paginator.xhtml">
+				<ui:param name="paginatorBean" value='#{fishnetStateBean}'/>
+			</ui:include>
+		</h:form>
+			
+	</ui:define>
+
+</ui:composition>

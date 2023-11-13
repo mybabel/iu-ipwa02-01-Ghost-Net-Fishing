@@ -1,0 +1,96 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:forgeview="http://jboss.org/forge/view"
+	template="/resources/scaffold/pageTemplate.xhtml">
+
+	<f:metadata>
+		<f:viewParam name="page" value='#{fishnetOverviewBean.page}' />
+		<f:event type="preRenderView"
+			listener='#{fishnetOverviewBean.paginate}' />
+	</f:metadata>
+
+	<ui:param name="pageTitle" value="Ghost Net Fishing" />
+
+	<ui:define name="header">
+		Ghost Net Fishing
+	</ui:define>
+
+	<ui:define name="main">
+		<h2>Willkommen auf der Melde- und Bergeplattform!</h2>
+		<h3>Hier können Sie verschollene Geisternetze melden oder sich
+			für eine Bergung eines Geisternetzes anmelden!</h3>
+		<br />
+		<h4>Die Non-Profit-Organisation "Shea Sepherd" hat sich zum Ziel
+			gesetzt, die Weltmeere vom Plastik zu befreien.</h4>
+		<br />
+		<p>
+			<h:form id="mainHomeForm">
+				<h:link outcome="/person/create" value="Anonyme Meldung"
+					styleClass="btn btn-primary">
+					<!-- Anonymous reporting person has the id 5 -->
+					<f:param name="personType" value="5" />
+				</h:link>
+				<h:link outcome="/person/create" value="Meldung"
+					styleClass="btn btn-primary">
+					<!-- Reporting person has the id 4 -->
+					<f:param name="personType" value="4" />
+				</h:link>
+				<h:link outcome="/person/create" value="Berger"
+					styleClass="btn btn-primary">
+					<!-- Recover person has the id 6 -->
+					<f:param name="personType" value="6" />
+				</h:link>
+				<h:link outcome="/fishnet/overview" value="Fischnetz Übersicht"
+					styleClass="btn btn-primary">
+				</h:link>
+			</h:form>
+		</p>
+		<h3>Übersicht gemeldeter Fischnetze</h3>
+		<!--The div element for the map -->
+		<div id="map" style="height: 400px"></div>
+
+		<!-- prettier-ignore -->
+		<h:outputScript name="googleMapScript.js"></h:outputScript>
+	</ui:define>
+	<ui:define name="scriptHead">
+		<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+	</ui:define>
+	<ui:define name="scriptBody">
+		// Initialize and add the map
+let map;
+
+async function initMap() {
+  // The location of Schorndorf Germany
+  const position = { lat: 48.797279, lng: 9.5302101 };
+  // Request needed libraries.
+  //@ts-ignore
+  const { Map } = await google.maps.importLibrary("maps");
+  const { AdvancedMarkerView } = await google.maps.importLibrary("marker");
+
+  // The map, centered at Schorndorf
+  map = new Map(document.getElementById("map"), {
+    zoom: 4,
+    center: position,
+    mapId: "DEMO_MAP_ID",
+  });
+  
+  <ui:repeat var="o" value="#{fishnetOverviewBean.pageItems}"
+			varStatus="status">
+      // The marker, positioned at Schorndorf
+  const marker#{status.index} = new AdvancedMarkerView({
+    map: map,
+    position: { lat: #{o.latitude}, lng: #{o.longitude} },
+    title: "#{status.index}",
+  });
+  </ui:repeat>
+}
+
+initMap();
+	</ui:define>
+</ui:composition>

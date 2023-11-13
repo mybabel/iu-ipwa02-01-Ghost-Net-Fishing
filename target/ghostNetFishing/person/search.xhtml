@@ -1,0 +1,91 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:forgeview="http://jboss.org/forge/view"
+	template="/resources/scaffold/pageTemplate.xhtml">
+
+	<f:metadata>
+		<f:viewParam name="page" value='#{personBean.page}'/>
+		<f:event type="preRenderView" listener='#{personBean.paginate}'/>
+	</f:metadata>
+
+	<ui:param name="pageTitle" value="Personensuche"/>
+
+	<ui:define name="header">
+		Person
+	</ui:define>
+
+	<ui:define name="subheader">
+		Suche:
+	</ui:define>
+
+	<ui:define name="footer"/>
+
+	<ui:define name="main">
+		<h:form id="search">
+			<f:validateBean disabled="true">
+				<h:panelGroup styleClass="search">
+
+					<h:panelGrid columnClasses="label,component,required" columns="3">
+						<h:outputLabel for="personBeanExamplePersonType" value="Personentyp:"/>
+						<h:panelGroup>
+							<h:selectOneMenu converter="#{personTypeBean.converter}" id="personBeanExamplePersonType" value="#{personBean.example.personType}">
+								<f:selectItem/>
+								<f:selectItems itemLabel="#{forgeview:display(_item)}" itemValue="#{_item}" value="#{personTypeBean.all}" var="_item"/>
+							</h:selectOneMenu>
+							<h:message for="personBeanExamplePersonType" styleClass="error"/>
+						</h:panelGroup>
+						<h:outputText/>
+						<h:outputLabel for="personBeanExampleName" value="Name:"/>
+						<h:panelGroup>
+							<h:inputText id="personBeanExampleName" maxLength="50" value="#{personBean.example.name}"/>
+							<h:message for="personBeanExampleName" styleClass="error"/>
+						</h:panelGroup>
+						<h:outputText/>
+						<h:outputLabel for="personBeanExampleTelephoneNumber" value="Telefonnummer:"/>
+						<h:panelGroup>
+							<h:inputText id="personBeanExampleTelephoneNumber" maxLength="50" value="#{personBean.example.telephoneNumber}"/>
+							<h:message for="personBeanExampleTelephoneNumber" styleClass="error"/>
+						</h:panelGroup>
+						<h:outputText/>
+					</h:panelGrid>
+					<h:panelGroup styleClass="buttons">
+						<h:commandLink value="Suche" action='#{personBean.search}' styleClass="btn btn-primary"/>
+						<h:link outcome="/index.xhtml" styleClass="btn btn-primary">
+							Hauptseite
+						</h:link>
+					</h:panelGroup>
+				</h:panelGroup>
+			</f:validateBean>
+			
+			<h:dataTable id="personBeanPageItems" styleClass="data-table" value="#{personBean.pageItems}" var="_item">
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Name"/>
+					</f:facet>
+					<h:link outcome="/person/view">
+						<f:param name="id" value="#{_item.id}"/>
+						<h:outputText id="_itemName" value="#{_item.name}"/>
+					</h:link>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Telefonnummer"/>
+					</f:facet>
+					<h:link outcome="/person/view">
+						<f:param name="id" value="#{_item.id}"/>
+						<h:outputText id="_itemTelephoneNumber" value="#{_item.telephoneNumber}"/>
+					</h:link>
+				</h:column>
+			</h:dataTable>
+			<ui:include src="/resources/scaffold/paginator.xhtml">
+				<ui:param name="paginatorBean" value='#{personBean}'/>
+			</ui:include>
+		</h:form>
+			
+	</ui:define>
+
+</ui:composition>

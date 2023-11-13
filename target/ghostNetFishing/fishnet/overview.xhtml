@@ -1,0 +1,90 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:forgeview="http://jboss.org/forge/view"
+	template="/resources/scaffold/pageTemplate.xhtml">
+
+	<f:metadata>
+		<f:viewParam name="page" value='#{fishnetOverviewBean.page}' />
+		<f:event type="preRenderView"
+			listener='#{fishnetOverviewBean.paginate}' />
+	</f:metadata>
+
+	<ui:param name="pageTitle" value="Fischnetz Übersicht" />
+
+	<ui:define name="header">
+		Fischnetz Übersicht
+	</ui:define>
+	
+	<ui:define name="main">
+		<h:form id="overview">
+			<h:messages globalOnly="true" styleClass="error" />
+			<h:dataTable id="fishnetOverviewBeanPageItems"
+				styleClass="data-table" value="#{fishnetOverviewBean.pageItems}"
+				var="_item">
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Größe" />
+					</f:facet>
+					<h:link outcome="/fishnet/view">
+						<f:param name="id" value="#{_item.id}" />
+						<h:outputText id="_itemSize" value="#{_item.size}" />
+					</h:link>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Breitegrad" />
+					</f:facet>
+					<h:link outcome="/fishnet/view">
+						<f:param name="id" value="#{_item.id}" />
+						<h:outputText id="_itemLatitude" value="#{_item.latitude}" />
+					</h:link>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Längegrad" />
+					</f:facet>
+					<h:link outcome="/fishnet/view">
+						<f:param name="id" value="#{_item.id}" />
+						<h:outputText id="_itemLongitude" value="#{_item.longitude}" />
+					</h:link>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Status" />
+					</f:facet>
+					<h:link outcome="/fishnet/view">
+						<f:param name="id" value="#{_item.id}" />
+						<h:outputText id="_itemState"
+							value="#{_item.fishnetState.description}" />
+					</h:link>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Neuer Status" />
+					</f:facet>
+					<h:selectOneMenu value="#{_item.newFishnetState}"
+						converter="#{fishnetStateBean.converter}">
+						<f:selectItem />
+						<f:selectItems itemValue="#{_state}"
+							itemLabel="#{forgeview:display(_state)}"
+							value="#{forgeview:asSortedList(fishnetOverviewBean.fetchAllPossibleDestinationStates(_item.fishnetState, userManagementBean.user.personType))}"
+							var="#{_state}" />
+					</h:selectOneMenu>
+				</h:column>
+			</h:dataTable>
+			<h:panelGroup styleClass="buttons">
+				<h:link outcome="/index.xhtml" styleClass="btn btn-primary">
+					Hauptseite
+				</h:link>
+				<h:commandButton action="#{fishnetOverviewBean.accept}"
+					styleClass="btn btn-primary" value="Änderungen übernehmen" />
+			</h:panelGroup>
+		</h:form>
+
+	</ui:define>
+</ui:composition>

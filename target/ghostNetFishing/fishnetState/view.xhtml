@@ -1,0 +1,77 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:forgeview="http://jboss.org/forge/view"
+	template="/resources/scaffold/pageTemplate.xhtml">
+
+	<f:metadata>
+		<f:viewParam name="id" value='#{fishnetStateBean.id}'/>
+		<f:event type="preRenderView" listener='#{fishnetStateBean.retrieve}'/>
+	</f:metadata>
+
+	<ui:param name="pageTitle" value="Fischnetz Status Uebersicht"/>
+
+	<ui:define name="header">
+		Fischnetz Status
+	</ui:define>
+
+	<ui:define name="subheader">
+		Fischnetz Status Übersicht
+	</ui:define>
+
+	<ui:define name="footer"/>
+
+	<ui:define name="main">
+		<h:panelGrid columnClasses="label,component,required" columns="3">
+			<h:outputLabel for="fishnetStateBeanFishnetStateDescription" value="Beschreibung"/>
+			<h:outputText id="fishnetStateBeanFishnetStateDescription" value="#{fishnetStateBean.fishnetState.description}"/>  
+			<h:outputText/>
+			
+			<h:outputLabel for="fishnetStateBeanFishnetStateRelevantForRecoveryFlag" value="Relevant für die Bergung?"/>
+			<h:outputText id="fishnetStateBeanFishnetStateRelevantForRecoveryFlag" styleClass="#{fishnetStateBean.fishnetState.relevantForRecoveryFlag ? 'boolean-true' : 'boolean-false'}" value=""/>
+			<h:outputText/>
+			
+			<h:outputLabel for="fishnetStateBeanFishnetStateFishnets" value="Fischnetze:"/>
+			<h:dataTable id="fishnetStateBeanFishnetStateFishnets" styleClass="data-table" value="#{forgeview:asList(fishnetStateBean.fishnetState.fishnets)}" var="_item">
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Größe"/>
+					</f:facet>
+					<h:link outcome="/fishnet/view">
+						<f:param name="id" value="#{_item.id}"/>
+						<h:outputText id="_itemSize" value="#{_item.size}"/>
+					</h:link>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Breitegrad"/>
+					</f:facet>
+					<h:link outcome="/fishnet/view">
+						<f:param name="id" value="#{_item.id}"/>
+						<h:outputText id="_itemLatitude" value="#{_item.latitude}"/>
+					</h:link>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Längegrad"/>
+					</f:facet>
+					<h:link outcome="/fishnet/view">
+						<f:param name="id" value="#{_item.id}"/>
+						<h:outputText id="_itemLongitude" value="#{_item.longitude}"/>
+					</h:link>
+				</h:column>
+			</h:dataTable>
+			<h:outputText/>
+		</h:panelGrid>
+
+		<div class="buttons">
+			<h:link value="Alle ansehen" outcome="search" styleClass="btn btn-primary"/> 
+			<h:link value="Bearbeiten" outcome="create" includeViewParams="true" styleClass="btn btn-primary"/>
+			<h:link value="Neu" outcome="create" styleClass="btn btn-primary"/>
+		</div>
+	</ui:define>
+
+</ui:composition>

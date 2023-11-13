@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/resources/scaffold/pageTemplate.xhtml">
+
+	<f:metadata>
+		<f:viewParam name="id" value='#{fishnetBean.id}'/>
+		<f:event type="preRenderView" listener='#{fishnetBean.retrieve}'/>
+	</f:metadata>
+
+	<ui:param name="pageTitle" value="Fischnetz Daten"/>
+
+	<ui:define name="header">
+		Fischnetz
+	</ui:define>
+
+	<ui:define name="subheader">
+		Fischnetz Daten:
+	</ui:define>
+
+	<ui:define name="footer"/>
+
+	<ui:define name="main">
+		<h:panelGrid columnClasses="label,component,required" columns="3">
+			<h:outputLabel for="fishnetBeanFishnetFishnetState" value="Fischnetz Status:"/>
+			<h:link id="fishnetBeanFishnetFishnetState" outcome="/fishnetState/view" rendered="#{!empty fishnetBean.fishnet.fishnetState}" value="#{fishnetBean.fishnet.fishnetState}">
+				<f:param name="id" value="#{fishnetBean.fishnet.fishnetState.id}"/>
+			</h:link>
+			<h:outputText/>
+			<h:outputLabel for="fishnetBeanFishnetPersonBySalvagingPersonId" value="Meldende Person:"/>
+			<h:link id="fishnetBeanFishnetPersonBySalvagingPersonId" outcome="/person/view" rendered="#{!empty fishnetBean.fishnet.personBySalvagingPersonId}" value="#{fishnetBean.fishnet.personBySalvagingPersonId}">
+				<f:param name="id" value="#{fishnetBean.fishnet.personBySalvagingPersonId.id}"/>
+			</h:link>
+			<h:outputText rendered="#{empty fishnetBean.fishnet.personBySalvagingPersonId}"/> 	
+			<h:outputText/>
+			<h:outputLabel for="fishnetBeanFishnetPersonByRecoveryMessagingPersonId" value="Bergende Person:"/>
+			<h:link id="fishnetBeanFishnetPersonByRecoveryMessagingPersonId" outcome="/person/view" rendered="#{!empty fishnetBean.fishnet.personByRecoveryMessagingPersonId}" value="#{fishnetBean.fishnet.personByRecoveryMessagingPersonId}">
+				<f:param name="id" value="#{fishnetBean.fishnet.personByRecoveryMessagingPersonId.id}"/>
+			</h:link>
+			<h:outputText rendered="#{empty fishnetBean.fishnet.personByRecoveryMessagingPersonId}"/> 	
+			<h:outputText/>
+			<h:outputLabel for="fishnetBeanFishnetSize" value="Größe:"/>
+			<h:outputText id="fishnetBeanFishnetSize" value="#{fishnetBean.fishnet.size}"/>
+			<h:outputText/>
+			<h:outputLabel for="fishnetBeanFishnetLatitude" value="Breitegrad:"/>
+			<h:outputText id="fishnetBeanFishnetLatitude" value="#{fishnetBean.fishnet.latitude}"/>
+			<h:outputText/>
+			<h:outputLabel for="fishnetBeanFishnetLongitude" value="Längegrad:"/>
+			<h:outputText id="fishnetBeanFishnetLongitude" value="#{fishnetBean.fishnet.longitude}"/>
+			<h:outputText/>
+		</h:panelGrid>
+		<div class="buttons">
+			<h:link value="Alle ansehen" outcome="search" styleClass="btn btn-primary"/> 
+			<h:link value="Bearbeiten" outcome="create" includeViewParams="true" styleClass="btn btn-primary"/>
+			<h:link value="Neu" outcome="create" styleClass="btn btn-primary"/>
+		</div>
+	</ui:define>
+</ui:composition>

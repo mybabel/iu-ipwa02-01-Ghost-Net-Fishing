@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:forgeview="http://jboss.org/forge/view">
+
+<h:head>
+	<title>#{empty pageTitle ? 'Page Title' : pageTitle}</title>
+	<link rel="icon" href='#{resource["favicon.ico"]}' />
+	<h:outputStylesheet name="bootstrap.css" />
+	<h:outputStylesheet name="forge-style.css" />
+	<ui:insert name="css"/>
+	<ui:insert name="scriptHead"/>
+</h:head>
+
+<h:body>
+	<ui:debug rendered="#{facesContext.application.projectStage == 'Development'}" />
+	<div class="navbar navbar-fixed-top">
+		<div class="navbar-inner">
+			<div class="container">
+				<h:link id="brandLink" outcome="/index.xhtml" styleClass="brand">
+					<h:outputText value="Welcome to " rendered=" #{request.userPrincipal !=null} "/>
+                    Ghost Net Fishing
+                    <h:outputText value=",  #{request.userPrincipal.name}" rendered="#{request.userPrincipal !=null} "/>
+				</h:link>
+				<h:form id="userManagementForm" styleClass="navbar-form pull-right">
+					<h:panelGroup id="noUserBlock" layout="block" rendered="#{userManagementBean.user == null}">
+  							<h:selectOneMenu converter="#{personBean.converter}"
+								id="personBeanUser"
+								value="#{userManagementBean.user}">
+								<f:selectItem />
+								<f:selectItems itemLabel="#{_item.personType.description} #{forgeview:display(_item)}"
+									itemValue="#{_item}" value="#{personBean.all}" var="_item" />
+									<f:ajax execute="personBeanUser" render="@all" listener="#{userManagementBean.onPersonSelection}"/>
+							</h:selectOneMenu>
+				</h:panelGroup>
+				<h:panelGroup id="userBlock" style="margin:10px 0px 10px 0px" rendered="#{userManagementBean.user != null}">
+					<h:outputText value="#{userManagementBean.user.personType.description}: #{userManagementBean.user.name}"/>
+					<h:commandLink style="margin:10px" value="ausloggen" action='#{userManagementBean.resetUser}' styleClass="btn-logout"/>
+				</h:panelGroup>
+				</h:form>
+				<div class="nav-collapse collapse">
+					
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="container forgecontainer">
+		<div id="navigation">
+			<h:link id="homeLink" outcome="/index.xhtml">
+				<h:graphicImage value='#{resource["forge-logo.png"]}' alt="Forge... get hammered" border="0" />	
+			</h:link>
+		</div>
+
+		<div id="content">
+			<h1>
+				<ui:insert name="header" />
+			</h1>
+			<h2>
+				<ui:insert name="subheader" />
+			</h2>
+
+			<ui:insert name="main" />
+		</div>
+	</div>
+
+	<footer>
+		<div id="footer-wrapper">
+	    	<p>Powered by <a href="http://jboss.org/forge">Forge</a></p>
+	    </div>
+	</footer>
+	
+	<h:outputScript library="primefaces" name="jquery/jquery.js" target="head" />
+	  <script>
+    	<ui:insert name="scriptBody" />
+  	</script>
+</h:body>
+</html>

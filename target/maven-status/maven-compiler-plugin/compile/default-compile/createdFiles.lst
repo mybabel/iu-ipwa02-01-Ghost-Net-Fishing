@@ -1,0 +1,15 @@
+org\el\ghostnetfishing\view\FishnetOverviewBean.class
+org\el\ghostnetfishing\view\UserManagementBean.class
+org\el\ghostnetfishing\view\FishnetStateBean.class
+org\el\ghostnetfishing\view\PersonTypeBean$1.class
+org\el\ghostnetfishing\view\FishnetBean$1.class
+org\el\ghostnetfishing\view\FishnetBean.class
+org\el\ghostnetfishing\view\FishnetStateBean$1.class
+org\el\ghostnetfishing\view\PersonBean$1.class
+org\el\ghostnetfishing\view\PersonTypeBean.class
+org\el\ghostnetfishing\view\PersonBean.class
+org\el\ghostnetfishing\model\Fishnet.class
+org\el\ghostnetfishing\model\Person.class
+org\el\ghostnetfishing\model\FishnetState.class
+org\el\ghostnetfishing\view\ViewUtils.class
+org\el\ghostnetfishing\model\PersonType.class

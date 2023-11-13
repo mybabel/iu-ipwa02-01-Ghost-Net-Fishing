@@ -1,0 +1,66 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:forgeview="http://jboss.org/forge/view"
+	template="/resources/scaffold/pageTemplate.xhtml">
+
+	<f:metadata>
+		<f:viewParam name="id" value='#{personTypeBean.id}'/>
+		<f:event type="preRenderView" listener='#{personTypeBean.retrieve}'/>
+	</f:metadata>
+
+	<ui:param name="pageTitle" value="View Person Type"/>
+
+	<ui:define name="header">
+		Person Type
+	</ui:define>
+
+	<ui:define name="subheader">
+		View existing Person Type
+	</ui:define>
+
+	<ui:define name="footer"/>
+
+	<ui:define name="main">
+		<h:panelGrid columnClasses="label,component,required" columns="3">
+			<h:outputLabel for="personTypeBeanPersonTypeDescription" value="Description:"/>
+			<h:outputText id="personTypeBeanPersonTypeDescription" value="#{personTypeBean.personType.description}"/>
+			<h:outputText/>
+			<h:outputLabel for="personTypeBeanPersonTypeTelephoneNumberRequired" value="Telephone number required:"/>
+			<h:outputText id="personTypeBeanPersonTypeTelephoneNumberRequired" styleClass="#{personTypeBean.personType.telephoneNumberRequired ? 'boolean-true' : 'boolean-false'}" value=""/>
+			<h:outputText/>
+			<h:outputLabel for="personTypeBeanPersonTypePersons" value="Persons:"/>
+			<h:dataTable id="personTypeBeanPersonTypePersons" styleClass="data-table" value="#{forgeview:asList(personTypeBean.personType.persons)}" var="_item">
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Name"/>
+					</f:facet>
+					<h:link outcome="/person/view">
+						<f:param name="id" value="#{_item.id}"/>
+						<h:outputText id="_itemName" value="#{_item.name}"/>
+					</h:link>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Telephone Number"/>
+					</f:facet>
+					<h:link outcome="/person/view">
+						<f:param name="id" value="#{_item.id}"/>
+						<h:outputText id="_itemTelephoneNumber" value="#{_item.telephoneNumber}"/>
+					</h:link>
+				</h:column>
+			</h:dataTable>
+			<h:outputText/>
+		</h:panelGrid>
+
+		<div class="buttons">
+			<h:link value="View All" outcome="search" styleClass="btn btn-primary"/> 
+			<h:link value="Edit" outcome="create" includeViewParams="true" styleClass="btn btn-primary"/>
+			<h:link value="Create New" outcome="create" styleClass="btn btn-primary"/>
+		</div>
+	</ui:define>
+
+</ui:composition>

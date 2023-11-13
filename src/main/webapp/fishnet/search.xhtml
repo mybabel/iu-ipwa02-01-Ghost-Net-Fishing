@@ -1,0 +1,104 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:forgeview="http://jboss.org/forge/view"
+	template="/resources/scaffold/pageTemplate.xhtml">
+
+	<f:metadata>
+		<f:viewParam name="page" value='#{fishnetBean.page}'/>
+		<f:event type="preRenderView" listener='#{fishnetBean.paginate}'/>
+	</f:metadata>
+
+	<ui:param name="pageTitle" value="Fischnetz Suche"/>
+
+	<ui:define name="header">
+		Fischnetz
+	</ui:define>
+
+	<ui:define name="subheader">
+		Suche:
+	</ui:define>
+
+	<ui:define name="footer"/>
+
+	<ui:define name="main">
+		<h:form id="search">
+			<f:validateBean disabled="true">
+				<h:panelGroup styleClass="search">
+
+					<h:panelGrid columnClasses="label,component,required" columns="3">
+						<h:outputLabel for="fishnetBeanExampleFishnetState" value="Fischnetz Status:"/>
+						<h:panelGroup>
+							<h:selectOneMenu converter="#{fishnetStateBean.converter}" id="fishnetBeanExampleFishnetState" value="#{fishnetBean.example.fishnetState}">
+								<f:selectItem/>
+								<f:selectItems itemLabel="#{forgeview:display(_item)}" itemValue="#{_item}" value="#{fishnetStateBean.all}" var="_item"/>
+							</h:selectOneMenu>
+							<h:message for="fishnetBeanExampleFishnetState" styleClass="error"/>
+						</h:panelGroup>
+						<h:outputText/>
+						<h:outputLabel for="fishnetBeanExamplePersonBySalvagingPersonId" value="Bergende Person:"/>
+						<h:panelGroup>
+							<h:selectOneMenu converter="#{personBean.converter}" id="fishnetBeanExamplePersonBySalvagingPersonId" value="#{fishnetBean.example.personBySalvagingPersonId}">
+								<f:selectItem/>
+								<f:selectItems itemLabel="#{forgeview:display(_item)}" itemValue="#{_item}" value="#{personBean.all}" var="_item"/>
+							</h:selectOneMenu>
+							<h:message for="fishnetBeanExamplePersonBySalvagingPersonId" styleClass="error"/>
+						</h:panelGroup>
+						<h:outputText/>
+						<h:outputLabel for="fishnetBeanExamplePersonByRecoveryMessagingPersonId" value="Meldende Person:"/>
+						<h:panelGroup>
+							<h:selectOneMenu converter="#{personBean.converter}" id="fishnetBeanExamplePersonByRecoveryMessagingPersonId" value="#{fishnetBean.example.personByRecoveryMessagingPersonId}">
+								<f:selectItem/>
+								<f:selectItems itemLabel="#{forgeview:display(_item)}" itemValue="#{_item}" value="#{personBean.all}" var="_item"/>
+							</h:selectOneMenu>
+							<h:message for="fishnetBeanExamplePersonByRecoveryMessagingPersonId" styleClass="error"/>
+						</h:panelGroup>
+						<h:outputText/>
+					</h:panelGrid>
+					<h:panelGroup styleClass="buttons">
+						<h:commandLink value="Suche" action='#{fishnetBean.search}' styleClass="btn btn-primary"/>
+						<h:link outcome="/index.xhtml" styleClass="btn btn-primary">
+							Hauptseite
+						</h:link>
+					</h:panelGroup>
+				</h:panelGroup>
+			</f:validateBean>
+			
+			<h:dataTable id="fishnetBeanPageItems" styleClass="data-table" value="#{fishnetBean.pageItems}" var="_item">
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Größe"/>
+					</f:facet>
+					<h:link outcome="/fishnet/view">
+						<f:param name="id" value="#{_item.id}"/>
+						<h:outputText id="_itemSize" value="#{_item.size}"/>
+					</h:link>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Breitegrad"/>
+					</f:facet>
+					<h:link outcome="/fishnet/view">
+						<f:param name="id" value="#{_item.id}"/>
+						<h:outputText id="_itemLatitude" value="#{_item.latitude}"/>
+					</h:link>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Längegrad"/>
+					</f:facet>
+					<h:link outcome="/fishnet/view">
+						<f:param name="id" value="#{_item.id}"/>
+						<h:outputText id="_itemLongitude" value="#{_item.longitude}"/>
+					</h:link>
+				</h:column>
+			</h:dataTable>
+			<ui:include src="/resources/scaffold/paginator.xhtml">
+				<ui:param name="paginatorBean" value='#{fishnetBean}'/>
+			</ui:include>
+		</h:form>
+	</ui:define>
+</ui:composition>
