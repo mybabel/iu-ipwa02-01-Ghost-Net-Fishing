@@ -34,7 +34,7 @@ import org.el.ghostnetfishing.model.PersonType;
 public class FishnetOverviewBean {
 
 	/**
-	 * Page counter for UI
+	 * Page counter for UI.
 	 */
 	private int page;
 	
@@ -44,12 +44,12 @@ public class FishnetOverviewBean {
 	private List<Fishnet> pageItems;
 	
 	/**
-	 * Used as search parameter in search view
+	 * Used as search parameter in search view.
 	 */
 	private Fishnet example = new Fishnet();
 
 	/**
-	 * Loading entity manager with unit name ghostNetFishing-persistence-unit 
+	 * Loading entity manager with unit name ghostNetFishing-persistence-unit.
 	 */
 	@PersistenceContext(unitName = "ghostNetFishing-persistence-unit", type = PersistenceContextType.EXTENDED)
 	private EntityManager entityManager;
@@ -86,7 +86,7 @@ public class FishnetOverviewBean {
 	 * Fetching all relevant fishnet states
 	 * @param fishnetState of fishnet
 	 * @param type of the person
-	 * @return list of FishnetState, if available, if not, returns null 
+	 * @return list of FishnetState, if available, if not, returns null.
 	 */
 	public List<FishnetState> fetchAllPossibleDestinationStates(FishnetState fishnetState, PersonType type){
 		
@@ -119,9 +119,9 @@ public class FishnetOverviewBean {
 	
 	/**
 	 * Accepting changes on the page.
-	 * @return If FishnetState is changed, updates the database with new dataset otherwise returns null.
+	 * If FishnetState is changed, updates the database with new dataset.
 	 */
-	public String accept(){
+	public void accept(){
 		
 		for(Fishnet fishnet : this.pageItems){
 			if(fishnet.getNewFishnetState() != null){
@@ -136,7 +136,6 @@ public class FishnetOverviewBean {
 				this.entityManager.merge(fishnet);
 			}
 		}
-		return null;
 	}
 
 	/**

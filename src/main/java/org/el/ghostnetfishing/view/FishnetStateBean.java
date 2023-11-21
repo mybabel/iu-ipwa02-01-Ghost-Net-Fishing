@@ -144,9 +144,9 @@ public class FishnetStateBean implements Serializable {
 	}
 
 	/**
-	 * Used for searching by id.
+	 * Used for search FishnetState by id.
 	 * @param id.
-	 * @return searching id.
+	 * @return FishnetState with wanted id.
 	 */
 	public FishnetState findById(Integer id) {
 
@@ -387,9 +387,9 @@ public class FishnetStateBean implements Serializable {
 	}
 
 	/**
-	 * Retrieve all FishnetState with the flag relevant for recover
-	 * @param entityManager
-	 * @return
+	 * Retrieve all FishnetState with the flag relevant for recover.
+	 * @param entityManager.
+	 * @return all FishnetState which are relevant to display, in case of recovery.
 	 */
 	public static List<FishnetState> getAllRelevantForRecovery(EntityManager entityManager){
 

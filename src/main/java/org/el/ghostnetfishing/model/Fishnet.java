@@ -48,8 +48,8 @@ public class Fishnet implements java.io.Serializable {
 	private Person personByRecoveryMessagingPersonId;
 	
 	/**
-	 *  Size of the fishnet.
-	 *  Min value is 1.
+	 *  Validation of the size of a fishnet.
+	 *  Min value for size is 1.
 	 */
 	@Min(1)
 	private double size;

@@ -17,9 +17,9 @@ import javax.persistence.Id;
 public final class ViewUtils {
 
 	/**
-	 * Converts a collection to a arraylist.
+	 * Converts a collection to an arraylist.
 	 * @param collection.
-	 * @return arraylist.
+	 * @return converted arraylist.
 	 */
 	public static <T> List<T> asList(Collection<T> collection) {
 
@@ -33,7 +33,7 @@ public final class ViewUtils {
 	/**
 	 * Converts to a linkedlist and sorts it.
 	 * @param collection is a list.
-	 * @return a linkedlist.
+	 * @return a sorted linkedlist.
 	 */
 	public static <T extends Comparable<? super T>> List<T> asSortedList(Collection<T> collection) {
 		

@@ -195,9 +195,9 @@ public class PersonBean implements Serializable {
 	}
 
 	/**
-	 * Used for searching by id.
+	 * Used for search Person by id.
 	 * @param id.
-	 * @return searching id.
+	 * @return Person with wanted id.
 	 */
 	public Person findById(Integer id) {
 

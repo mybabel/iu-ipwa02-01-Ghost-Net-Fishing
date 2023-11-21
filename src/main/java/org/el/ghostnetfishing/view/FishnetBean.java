@@ -111,8 +111,8 @@ public class FishnetBean implements Serializable {
 	}
 
 	/**
-	 * Check if a conversation is already started, when it is started, reload the page.
-	 * If not, start a new conversation.
+	 * Check if a conversation is already started, when it is started, reloads the page.
+	 * If not, starts a new conversation.
 	 */
 	public void retrieve() {
 
@@ -133,9 +133,9 @@ public class FishnetBean implements Serializable {
 	}
 
 	/**
-	 * Used for searching by id.
+	 * Used for search Fishnet by id.
 	 * @param id.
-	 * @return searching id.
+	 * @return Fishnet with wanted id.
 	 */
 	public Fishnet findById(Integer id) {
 		return this.entityManager.find(Fishnet.class, id);
