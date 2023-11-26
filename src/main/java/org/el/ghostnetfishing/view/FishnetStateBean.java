@@ -339,11 +339,11 @@ public class FishnetStateBean implements Serializable {
 	 * Lists of possible destination states for given currentstate and persontype  
 	 * this is the lowtec variant, realized with constant values, better way is to realize it with the checks in the databases
 	 * 
-	 * @param manager is the entity manager provided by the client
-	 * @param currentState is the source state (is required)
-	 * @param personType is the person who wants to change the state (is required)
-	 * @return List of FishnetStates
-	 * @throws IllegalArgumentException
+	 * @param manager is the entity manager provided by the client.
+	 * @param currentState is the source state (is required).
+	 * @param personType is the person who wants to change the state (is required).
+	 * @return list for FishnetStates.
+	 * @throws IllegalArgumentException by an error.
 	 */
 	public static List<FishnetState> fetchAllPossibleDestinationStates(EntityManager manager, FishnetState currentState, PersonType personType) throws IllegalArgumentException{
 

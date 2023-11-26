@@ -120,8 +120,8 @@ public class PersonBean implements Serializable {
 	}
 	
 	/**
-	 * 
-	 * @param personType
+	 * Management for the personType for the current user.
+	 * @param personType.
 	 */
 	private void setPersonTypeSelected(int personType) {
 		

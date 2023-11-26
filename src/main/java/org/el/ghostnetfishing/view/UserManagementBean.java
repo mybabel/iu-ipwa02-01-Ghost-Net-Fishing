@@ -11,7 +11,7 @@ import javax.inject.Named;
 import org.el.ghostnetfishing.model.Person;
 
 /**
- * UserManagementBean is used for user management
+ * UserManagementBean is used for user management.
  * @author Eugen
  */
 
